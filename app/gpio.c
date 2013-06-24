@@ -51,6 +51,7 @@ static void Usage( void )
     fprintf( stderr, "  output gpio value    Configures a GPIO for output and sets the initial value\n" );
     fprintf( stderr, "  get gpio             Reports the current value of a GPIO pin\n" );
     fprintf( stderr, "  set gpio value       Sets the value of an output pin\n" );
+    fprintf( stderr, "  dump gpio       Dumps gpio to kernel log\n" );
 }
 
 /****************************************************************************
@@ -135,6 +136,18 @@ int main( int argc, char **argv )
             if ( rc < 0 )
             {
                 perror( "gpio_get_value failed" );
+                exit( 1 );
+            }
+            printf( "%d\n", rc != 0 );
+        }
+        else
+        if ( strcmp( cmdStr, "dump" ) == 0 )
+        {
+            int rc = gpio_is_requested( 1,"dump" );
+
+            if ( rc < 0 )
+            {
+                perror( "gpio_is_requested failed" );
                 exit( 1 );
             }
             printf( "%d\n", rc != 0 );

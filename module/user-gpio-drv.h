@@ -35,6 +35,7 @@
 #define GPIO_CMD_DIRECTION_OUTPUT       0x83
 #define GPIO_CMD_GET_VALUE              0x84
 #define GPIO_CMD_SET_VALUE              0x85
+#define GPIO_CMD_ISREQUESTED            0x86
 
 typedef struct
 {
@@ -56,6 +57,7 @@ typedef struct
 #define GPIO_IOCTL_DIRECTION_OUTPUT     _IOW(   GPIO_MAGIC, GPIO_CMD_DIRECTION_OUTPUT, GPIO_Value_t )       /* arg is GPIO_Value_t * */
 #define GPIO_IOCTL_GET_VALUE            _IOWR(  GPIO_MAGIC, GPIO_CMD_GET_VALUE, GPIO_Value_t )              /* arg is GPIO_Value_t * */
 #define GPIO_IOCTL_SET_VALUE            _IOW(   GPIO_MAGIC, GPIO_CMD_SET_VALUE, GPIO_Value_t )              /* arg is GPIO_Value_t * */
+#define GPIO_IOCTL_ISREQUEST             _IOW(   GPIO_MAGIC, GPIO_CMD_ISREQUESTED, GPIO_Value_t )              /* arg is GPIO_Value_t * */
 
 /* ---- Variable Externs ------------------------------------------------- */
 

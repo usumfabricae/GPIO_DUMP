@@ -59,6 +59,20 @@ static  struct  cdev    gGpioDrvCDev;
 *
 ***************************************************************************/
 
+struct gpio_chip *old_chip_id;
+int (*match)(struct gpio_chip *chip, void *data);
+int f_match (struct gpio_chip *chip,void *data)
+{
+	int j=0;
+	if (old_chip_id!=chip)
+	{
+		for (j=0;j<chip->ngpio;j++)
+		printk ("GPIO %s %d %s\n",chip->label,chip->base+j,gpiochip_is_requested(chip,j));
+		old_chip_id=chip;
+	}
+	return 0;
+}
+
 long gpio_drv_ioctl( struct file *file, unsigned int cmd, unsigned long arg )
 {
     int     rc = 0;
@@ -91,6 +105,21 @@ long gpio_drv_ioctl( struct file *file, unsigned int cmd, unsigned long arg )
             strlcat( label, request.label, labelLen );
 
             rc = gpio_request( request.gpio, label );
+            break;
+        }
+
+        case GPIO_IOCTL_ISREQUEST:
+        {
+            GPIO_Request_t  request;
+            char           *label;
+            int             labelLen;
+
+            if ( copy_from_user( &request, (GPIO_Request_t *)arg, sizeof( request )) != 0 )
+            {
+                return -EFAULT;
+            }
+		old_chip_id=NULL;
+		gpiochip_find(NULL,f_match);
             break;
         }
 

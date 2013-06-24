@@ -46,6 +46,7 @@ int  gpio_direction_input( unsigned gpio );
 int  gpio_direction_output( unsigned gpio, int initialValue );
 int  gpio_get_value( unsigned gpio );
 void gpio_set_value( unsigned gpio, int value );
+int  gpio_is_requested( unsigned gpio, const char *label );
 
 #if defined( __cplusplus )
 }

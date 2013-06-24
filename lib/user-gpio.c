@@ -76,6 +76,28 @@ void gpio_term( void )
 
 /****************************************************************************
 *
+*   Requests a GPIO - fails if the GPIO is already "owned" and returns label
+*
+*   Returns 0 on success, -1 on error.
+*
+***************************************************************************/
+
+int  gpio_is_requested( unsigned gpio, const char *label )
+{
+    GPIO_Request_t  request;
+
+    request.gpio = gpio;
+    strncpy( request.label, label, sizeof( request.label ));
+    request.label[ sizeof( request.label ) - 1 ] = '\0';
+
+    if ( ioctl( gFd, GPIO_IOCTL_ISREQUEST, &request ) != 0 )
+    {
+        return -errno;
+    }
+    return 0;
+}
+/****************************************************************************
+*
 *   Requests a GPIO - fails if the GPIO is already "owned"
 *
 *   Returns 0 on success, -1 on error.
