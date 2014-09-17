@@ -13,8 +13,6 @@ obj-m	:= user-gpio-drv.o
 
 PWD       	= $(shell pwd)
 
-OVEROTOP	?= /home/gumstix/overo-oe
-#CROSS_COMPILE	?= $(OVEROTOP)/tmp/cross/armv7a/bin/arm-angstrom-linux-gnueabi-
 CROSS_COMPILE	?= /usr/bin/arm-linux-gnueabi-
 KERNEL_PATH     ?= /home/fede/ANDROID/rockchip-rk30xx-mk808
 ARCH		?= arm
